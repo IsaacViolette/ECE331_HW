@@ -18,6 +18,16 @@
 				printf("%s\n", argv[increment]);
 			return(0);
 		}
-	c.	
+	c.
+		COMPLETE	
 5.
 	mv ../XYZ Potter/"The Maze Runner.mp4"
+6.
+	COMPLETE	
+
+7.
+	The RPi is set up with Pi OS 64 bit.
+8.
+	a.
+		Windows
+	b.	
