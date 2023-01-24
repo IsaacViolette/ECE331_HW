@@ -1,9 +1,23 @@
 1. 
-	a. I used http://www.openvim.com/
-	b. The tutorial has been completed
+	a. 
+		I used http://www.openvim.com/
+	b. 
+		The tutorial has been completed
 2.
 	Vim was used to write the entire homework.
 3. 	
 	:r log.c
 4.
-	
+	a+b. 
+		#include <stdio.h>
+
+		int main(int argc, char *argv[])
+		{
+			int increment;
+			for(increment = 0; increment < argc; increment++)
+				printf("%s\n", argv[increment]);
+			return(0);
+		}
+	c.	
+5.
+	mv ../XYZ Potter/"The Maze Runner.mp4"
