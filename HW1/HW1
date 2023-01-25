@@ -27,9 +27,11 @@
 		alias grep="grep -E"
 	b.
 		Open a new file called .bash_aliases (Command: vim .bash_aliases).
-		In the file, write this line
-		.bashrc doesn't seem to have the alias I create, but I can
-		create an alias there, how come?
+		In the file, write this line: alias grep="grep -E" and save it.
+		Since the .bashrc file checks for .bash_aliases, all aliases can be written in the 
+		new file.
+		Now that the alias is set, .bashrc needs to be sourced using the command: source 
+		.bashrc .
 7.
 	The RPi is set up with Pi OS 64 bit.
 8.
@@ -39,9 +41,10 @@
 		The installation has been completed.
 9.
 	a.
-		I will be developing on Raspberry Pi 4.
-	b.	The ARM compiler toolchain (gcc) has been downloaded and installed.
+		I will be developing on Raspberry Pi 4 64 bit.
+	b.	
+		The ARM compiler toolchain (gcc) has been downloaded and installed.
 
 10.
 
-	enscript -b '%H(Document Name) %E %C|$%|MYNAME' -T 4 -p HW1.ps HW1	
+	enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -p HW1.ps HW1	
