@@ -14,12 +14,12 @@
 		int main(int argc, char *argv[])
 		{
 			int increment;
-			for(increment = 0; increment < argc; increment++)
+			for (increment = 0; increment < argc; increment++)
 				printf("%s\n", argv[increment]);
 			return(0);
 		}
 	c.
-		./args < "The Maze Runner.mp4"	
+		./args "The Maze Runner.mp4"	
 5.
 	mv ../XYZ Potter/"The Maze Runner.mp4"
 6.
