@@ -3,12 +3,18 @@
 2.
 
 3.
+	cd /usr/local
+	sudo git clone https://git.code.sf.net/p/openocd/code openocd-code
 
 4.
+	sudo mv Downloads/udev.tar.gz /etc/udev/rules.d/
+	sudo tar -xf /etc/udev/rules.d/udev.tar.gz
 
 5.
+	ln -s /lib/aarch64-linux-gnu/libpython3.9.so.1 rtossed/libpython3.8-so.1.0
 
 6.
+	sudo apt install libncurses5-dev
 
 7.
 
