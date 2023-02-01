@@ -1,11 +1,16 @@
 1.
+	cd /usr/src
+	sudo git clone --depth 1 https://github.com/torvalds/linux.git
 
 2.
 
 3.
 	cd /usr/local
 	sudo git clone https://git.code.sf.net/p/openocd/code openocd-code
-
+	sudo ./bootstrap
+	sudo ./configure
+	sudo make
+	sudo make install
 4.
 	sudo mv Downloads/udev.tar.gz /etc/udev/rules.d/
 	sudo tar -xf /etc/udev/rules.d/udev.tar.gz
@@ -17,9 +22,16 @@
 	sudo apt install libncurses5-dev
 
 7.
+	
 
 8.
+	cd ~/rtossed
+	export LD_LIBRARY_PATH=.
+	gdb
+	set output-radix 16
+	
 
 9.
+	sudo apt install minicom
 
 10.
