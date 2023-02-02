@@ -3,14 +3,25 @@
 	sudo git clone --depth 1 https://github.com/torvalds/linux.git
 
 2.
+	grep -r 'for ('[a-zA-Z][^n][^t] /usr/src/linux/kernel/
+
+	This command returned a list that proved that "most" of the linux kernel code
+	declares iterators at the start of a function. Now this is the 
+	"cleanest" grep I could seem to make, but there is a possibility that leaving 
+	out the 'n' and 't' could in turn get rid of some needed results. I also tried 
+	the following command to check if the variable iterators were included in the 
+	for-loop statement locally:
+	grep -r 'for (int' /usr/src/linux/kernel/
+	This ended up returning a few results which made it seem as though the kernel
+	"mostly" uses iterator variables declared at the start of a function.  
 
 3.
-	cd /usr/local
-	sudo git clone https://git.code.sf.net/p/openocd/code openocd-code
-	sudo ./bootstrap
-	sudo ./configure
-	sudo make
+	git clone https://git.code.sf.net/p/openocd/code openocd-code
+	./bootstrap
+	./configure --prefix=/usr/local
+	make
 	sudo make install
+
 4.
 	sudo mv Downloads/udev.tar.gz /etc/udev/rules.d/
 	sudo tar -xf /etc/udev/rules.d/udev.tar.gz
@@ -22,16 +33,17 @@
 	sudo apt install libncurses5-dev
 
 7.
-	
+	openocd -f interface/stlink-v2-1.cfg -f target/stm32h7x.cfg
 
 8.
 	cd ~/rtossed
 	export LD_LIBRARY_PATH=.
 	gdb
 	set output-radix 16
-	
+	target extended-remote :3333
 
 9.
 	sudo apt install minicom
 
 10.
+	enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -p HW2.ps HW2
