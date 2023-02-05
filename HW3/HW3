@@ -1,0 +1,14 @@
+1.
+	cd ~/openocd-code
+	sudo make uninstall
+2.
+	cd /usr/local/share
+	sudo rm -rf openocd
+	cd ~/openocd-code
+	make distclean
+3.
+	Task is completed
+4.
+	sudo apt update
+5.
+	sudo apt build-dep openocd
