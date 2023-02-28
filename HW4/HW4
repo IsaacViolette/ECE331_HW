@@ -1,0 +1,18 @@
+1.	
+	#include <stdio.h>
+
+	int main(int argc, char *argv[])
+	{
+		int increment;
+		for(increment = 0; increment < argc; increment++)
+			printf("%s\n", argv[increment]);
+		return(0);
+	}
+2.
+
+	
+3.
+	From left to right it shows: file permissions, number of links, owner name, owner group, file size, when it was last modified and file name.
+
+4.
+	enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -p HW4.ps HW4
