@@ -1,14 +1,77 @@
 1.
 	cd ~/openocd-code
 	sudo make uninstall
+
 2.
-	cd /usr/local/share
-	sudo rm -rf openocd
-	cd ~/openocd-code
-	make distclean
+	sudo rm -rf /usr/local/openocd-code
+	git clone https://git.code.sf.net/p/openocd/code openocd-code
+	./bootstrap
+	./configure --prefix=/usr/local
+	make
+	sudo make install
+
 3.
 	Task is completed
+
 4.
 	sudo apt update
+
 5.
 	sudo apt build-dep openocd
+
+6.
+	a.
+		[\+-]?[0-9]*\.\{1\}[0-9]+([e]?[\+-]?[0-9]+)?
+
+	b.
+		The minimum match would be any number that starts with
+		one or more numbers, has a period (exactly one), then follows
+		with 1 or more numbers with the possibility of an exponent using e
+		followed by 1 or more numbers. I believe this would meet most cases of
+		c floating point numbers since a floating point number in c is any
+		number followed by a period and then having a railing decimal which could
+		have an exponent. 
+	
+7.
+	Run OpenOCD and run GDB on rtossed.elf listening on port :3333 using: 
+	gdb ~/rtossed/build/rtossed.elf
+	target extended-remote :3333
+
+	Set breakpoint at sh() using:
+	break main.c:121
+	GDB OUTPUT: Breakpoint 1 at 0x800004e0: file Core/Src/main.c, line 122. 
+
+	Run the program from the beginning using:
+	run
+	GDB OUTPUT: Asked to start from the beginning (yes)
+	GDB OUTPUT: Breakpoint 1, sh () at Core/Src/main.c:122
+
+	Step over lines until sh_getline() using:
+	next
+	next
+	GDB OUTPUT: 126 getline_sh(buf);
+
+	Step into sh_getline() using:
+	step
+	GDB OUTPUT: getline_sh (buf=buf@entry=0x2001fde8 "echo the world") at Core/Src/main.c:72
+	
+	Print the address of buf using:
+	info address buf
+	GDB OUTPUT: Range 0x8000470-0x80004e0: a variable in $r7
+	I believe the previous step did not print an address becuase it's calling a function 
+	and not utilizing the variable buf.
+
+	Set a breakpoint at _read_r() using:
+	break syscalls.c:18
+	GDB OUTPUT: Breakpoint 2 at 0x8000448: file Core/Src/syscalls.c, line 19
+
+	Run until the _read_r() breakpoint using:
+	continue
+	GDB OUTPUT: Breakpoint 2, _read_r (ptr=0x20000128 <_impure_data>, fd=0, buf=0x200020e8, cnt=1024) at Core/Src/syscalls.c:19
+	
+	Give all function names in order:
+	info functions
+	This ouput all functions but not all between main and read_r
+	
+8.
+	enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -p HW3.ps HW3	

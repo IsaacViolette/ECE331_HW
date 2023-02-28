@@ -34,13 +34,13 @@
 
 7.
 	openocd -f interface/stlink-v2-1.cfg -f target/stm32h7x.cfg
-
+	(These are the right commands, doesn't want to work, throws a interface not found error)
 8.
 	cd ~/rtossed
 	export LD_LIBRARY_PATH=.
 	gdb
 	set output-radix 16
-	target extended-remote :3333
+	target extended-remote :3333 -----> (Since openocd doesn't work, this doesn't either)
 
 9.
 	sudo apt install minicom
