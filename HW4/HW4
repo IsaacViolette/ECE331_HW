@@ -1,18 +1,29 @@
 1.	
-	#include <stdio.h>
-
-	int main(int argc, char *argv[])
-	{
-		int increment;
-		for(increment = 0; increment < argc; increment++)
-			printf("%s\n", argv[increment]);
-		return(0);
-	}
-2.
-
 	
+	TARGET=args
+	OBJS=args.o
+	CFLAGS=-g -Wall
+
+	all: ${TARGET}
+	${TARGET}:${OBJS}
+		${CC} -o ${TARGET} ${OBJS}
+	clean:
+		rm -f ${TARGET} ${OBJS}
+
+2.
+	a.
+		[\+-]?(([0-9]+\.?[0-9]+[eE]{1}[\+-]?[0-9]+){1}|([0-9]+\.{1}[0-9]+){1}|(\.{1}[0-9]+[eE]?[0-9]+){1}|(\.{1}[0-9]+){1})[fFlL]?
+	b.
+			
 3.
-	From left to right it shows: file permissions, number of links, owner name, owner group, file size, when it was last modified and file name.
+	From left to right it shows: 
+	Read/write/execute file permissions (This is a regular file that the user can read, write and execute)
+	Number of links (1)
+	Owner name (pi) 
+	Owner group (disk) 
+	file size (97 bytes)
+	When it was last modified (Feb 23 at 08:20)
+	file name (calc1 which is an executable)
 
 4.
 	enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -p HW4.ps HW4
