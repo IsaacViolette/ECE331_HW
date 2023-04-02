@@ -1,0 +1,22 @@
+1.
+	35 9 */2 * * vader
+	55 21 */2 * * vader
+
+2.
+	a.
+		https://www.youtube.com/watch?v=io2G2yW1Qk8&t=258s	
+	b.
+		It is completed
+	c.
+		socket() : This function is used to create a new communication endpoint for network communication. It creates a socket decriptor that uniquely identifies the socket and different sockets can be used for different communication services.
+		
+		bind() : This function associates a socket with a specific network address and port number. This is required for the socket to receive data or send data to other machines.
+
+		listen() : This function is used by a server to signal that it is ready to accept incoming connection requests. This also specifies the max number of incoming requests that the server can hold in the queue. 
+
+		accept() : This function is called by the server after it receives a connection request from a client. It then creates a new socket and file descriptor for said client.
+
+		connect() : This function is used by a client to connect to a remote server on a specific network address. It uses the network address and port number of the server to create a coneection between client and server so data can be sent and received.  
+
+3.
+	enscript -b '$n %E %C|$%|Isaac Violette' -M Letter -T 4 -p HW7.ps HW7	
