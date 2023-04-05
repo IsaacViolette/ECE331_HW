@@ -1,6 +1,8 @@
 1.
-	35 9 */2 * * vader
-	55 21 */2 * * vader
+	35 9 * * * script.py
+	55 21 * * * script.py
+
+	There is no Cron entry that can run every other day without being caught in a boudry condition. To get over this hump, a python script is run everyday at 9:35AM and 9:55PM which keeps track of the days the command has been run. If Vader is needs to be run, the script will run the command Vader. If the command does not need to be called, the script will ignore the command Vader.
 
 2.
 	a.
