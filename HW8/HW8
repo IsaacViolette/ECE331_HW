@@ -1,0 +1,23 @@
+1.
+	vim was used for writing the homework.
+
+2.
+	sudo apt install lighttpd
+	sudo lighty-enable-mod fastcgi
+	sudo lighty-enable-mod fastcgi-php
+	sudo service lighttpd force-reload	
+	cd /var/www/html
+	sudo chown iviolette .
+	vim index.html
+	vim index.php
+
+3.
+	sudo apt install sqlite3 sqlitebrowser
+	sudo apt install php-sqlite3
+
+4.
+	sudo apt install php php-cgi
+	IN PHP FILE:
+		<?php
+			echo "Hello World";
+		?>
