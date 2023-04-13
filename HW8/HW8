@@ -21,3 +21,33 @@
 		<?php
 			echo "Hello World";
 		?>
+5.
+	IP/Netmask: 10.11.132.160/19
+	Network: 10.11.128.0
+	Broadcast: 10.11.159.255
+	Total Addresses: 8192
+	Assignable Addresses: 8190
+
+	WORK:
+	1110000000000000 & 1000010010100000 = 1000000000000000 = 10.11.128.0
+	1001111111111111  = 10.11.159.255
+	2^(32-19) = 8192
+	8192 - 2 = 8190
+
+	Network: 192.168.45.128
+	IP/Netmask: 192.168.45.150/26
+	Broadcast: 192.168.45.191
+	Total Addresses: 64
+	Assignable Adresses: 62
+
+	WORK:
+	NA: 192.168.45.10000000
+	BA: 192.168.45.10111111
+	The sign flips in the 27th spot so the mask is 26. IP address needs to be in between those values.
+	2^(32-26) = 64
+	64 - 2 = 62 
+
+6.
+	enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -M Letter -p HW8.ps HW8
+	
+	 
