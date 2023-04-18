@@ -11,6 +11,8 @@
 	vim index.html
 	vim index.php
 
+	lighttpd was set up.
+
 3.
 	sudo apt install sqlite3 sqlitebrowser
 	sudo apt install php-sqlite3
