@@ -1,0 +1,13 @@
+1.
+
+	The homework was done using vim.
+
+2.
+
+	sqlite3 data.db
+	create table data(temp real, date text, time text);
+	.exit
+
+3.
+	
+	
