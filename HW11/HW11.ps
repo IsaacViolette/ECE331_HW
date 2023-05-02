@@ -1,0 +1,804 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 18 36 594 756
+%%Title: Enscript Output
+%%Creator: GNU Enscript 1.6.5.90
+%%CreationDate: Mon May  1 21:34:44 2023
+%%Orientation: Portrait
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6.5 90
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6.5 90
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font 10 10 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [612 792] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-simple 1.6.5 90
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt_h 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_left_str show
+
+      d_header_w user_header_center_str stringwidth pop sub 2 div
+      0 moveto user_header_center_str show
+
+      d_header_w user_header_right_str stringwidth pop sub 5 sub
+      0 moveto user_header_right_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenumstr show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 576 def
+/d_page_h 720 def
+/d_header_x 0 def
+/d_header_y 705 def
+/d_header_w 576 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 576 def
+/d_footer_h 0 def
+/d_output_w 576 def
+/d_output_h 705 def
+/cols 1 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 1 def
+/fname (HW11) def
+/fdir (.) def
+/ftail (HW11) def
+% User defined strings:
+/fmodstr (Mon May 01 21:34:35 2023) def
+/pagenumstr (1) def
+/user_header_p true def
+/user_header_left_str (HW11 23/05/01 21:34:44) def
+/user_header_center_str (1) def
+/user_header_right_str (Isaac Violette) def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 692 M
+(1.) s
+5 681 M
+(    ) s
+5 670 M
+(    #!/usr/bin/python3) s
+5 648 M
+(    # Need to install python3-pyqt5.qtx11extras) s
+5 637 M
+(    import sys) s
+5 626 M
+(    from PyQt5.QtGui import  *) s
+5 615 M
+(    from PyQt5.QtWidgets import *) s
+5 604 M
+(    from PyQt5.QtCore import *) s
+5 593 M
+(    from PyQt5.QtX11Extras import *) s
+5 571 M
+(    #Making the label for the image) s
+5 560 M
+(    class XMagQLabel\(QLabel\):) s
+5 549 M
+(        def setLabel\(self, label\):) s
+5 538 M
+(            self.label=label) s
+5 516 M
+(        def setqimage\(self, qimage\):) s
+5 505 M
+(            self.qimage=qimage) s
+5 494 M
+(        ) s
+5 483 M
+(        #Used for making the image where ever the mouse is located) s
+5 472 M
+(        def mouseMoveEvent\(self, event\):) s
+5 461 M
+(            # Check bounds) s
+5 450 M
+(            if event.x\(\)>=self.qimage.width\(\):) s
+5 439 M
+(                return) s
+5 428 M
+(            if event.y\(\)>=self.qimage.height\(\):) s
+5 417 M
+(                return) s
+5 406 M
+(            if event.x\(\)<0:) s
+5 395 M
+(                return) s
+5 384 M
+(            if event.y\(\)<0:) s
+5 373 M
+(                return) s
+5 362 M
+(        #Used to find what the pixel color is based on mouse over image) s
+5 351 M
+(            c=self.qimage.pixelColor\(event.pos\(\)\)) s
+5 340 M
+(            t="Color [{x:3d},{y:3d}] \({r:2X},{g:2X},{b:2X},{a:2X}\)".format\(x=event.x\(\),y=event) s
+5 329 M
+(.y\(\),r=c.red\(\),g=c.green\(\),b=c.blue\(\),a=c.alpha\(\)\)) s
+5 318 M
+(            self.label.setText\(t\)) s
+5 296 M
+(    #Set up code for the creation of widget) s
+5 285 M
+(    #This is the widget specification code) s
+5 274 M
+(    class XMagQWidget\(QWidget\):) s
+5 263 M
+(        replace=False) s
+5 241 M
+(        def setParent\(self,parent\):) s
+5 230 M
+(            self.parent=parent) s
+5 208 M
+(        def mouseReleaseEvent\(self,event\):) s
+5 197 M
+(            if self.replace==False:) s
+5 186 M
+(                return) s
+5 175 M
+(            self.replace=False) s
+5 164 M
+(            self.releaseMouse\(\)) s
+5 153 M
+(            self.parent.update\(event.globalPos\(\)\)) s
+5 131 M
+(        def update\(self,tf\):) s
+5 120 M
+(            self.replace=tf) s
+5 98 M
+(    #This is the main class for the actual function of the widget) s
+5 87 M
+(    class pyqtmag:) s
+5 76 M
+(        #This is the main function of the widget, where all sub-widgets are created) s
+5 65 M
+(        def __init__\(self\):) s
+5 54 M
+(        #The size and specs of the main large widget) s
+5 43 M
+(            self.app=QApplication\(sys.argv\)) s
+5 32 M
+(            self.w=XMagQWidget\(\)) s
+5 21 M
+(            self.w.setGeometry\(100,100,250,200\)) s
+5 10 M
+(            self.w.setWindowTitle\('PyQtMag'\)) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 2 def
+/fname (HW11) def
+/fdir (.) def
+/ftail (HW11) def
+% User defined strings:
+/fmodstr (Mon May 01 21:34:35 2023) def
+/pagenumstr (2) def
+/user_header_p true def
+/user_header_left_str (HW11 23/05/01 21:34:44) def
+/user_header_center_str (2) def
+/user_header_right_str (Isaac Violette) def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 692 M
+(            self.screen=self.w.screen\(\)) s
+5 670 M
+(            self.layout=QGridLayout\(\)) s
+5 659 M
+(            self.w.setLayout\(self.layout\)) s
+5 648 M
+(        ) s
+5 637 M
+(        #Push button for quiting out of widget) s
+5 626 M
+(            self.quit=QPushButton\("Quit"\)) s
+5 615 M
+(            self.quit.clicked.connect\(self.quit_cb\)) s
+5 593 M
+(            self.layout.addWidget\(self.quit,1,1,1,1\)) s
+5 571 M
+(        #Replace button to grab a new image) s
+5 560 M
+(            self.replace=QPushButton\("Replace"\)) s
+5 549 M
+(            self.replace.clicked.connect\(self.replace_cb\)) s
+5 527 M
+(            self.layout.addWidget\(self.replace,1,2,1,1\)) s
+5 516 M
+(        ) s
+5 505 M
+(        #This is a "label" or the image which was taken) s
+5 494 M
+(        #This image can be configured, such as magnified) s
+5 483 M
+(            self.label=XMagQLabel\(\)) s
+5 472 M
+(            self.qimage=QImage\(\)) s
+5 461 M
+(            self.layout.addWidget\(self.label,2,1,1,2\)) s
+5 450 M
+(        ) s
+5 439 M
+(        #Makes a label at bottom of widget and when mouse is clicked) s
+5 428 M
+(        #on photo, the pixel color is shown) s
+5 417 M
+(            self.info=QLabel\("Color"\)) s
+5 406 M
+(            self.layout.addWidget\(self.info,3,1,1,2\)) s
+5 384 M
+(            self.label.setLabel\(self.info\)) s
+5 373 M
+(            self.label.setqimage\(self.qimage\)) s
+5 362 M
+(        ) s
+5 351 M
+(        #New button added to save image that has been grabbed) s
+5 340 M
+(            self.save=QPushButton\("Save Image"\)) s
+5 329 M
+(            self.save.clicked.connect\(self.save_image_cb\)) s
+5 307 M
+(            self.layout.addWidget\(self.save,1,3,1,1\)) s
+5 285 M
+(        #A zoom control has been added with a slider.) s
+5 274 M
+(            self.zoom_control = QSlider\(Qt.Vertical\)) s
+5 263 M
+(            self.zoom_control.setMinimum\(1\)) s
+5 252 M
+(            self.zoom_control.setMaximum\(200\)) s
+5 241 M
+(            self.zoom_control.setSliderPosition\(100\)) s
+5 230 M
+(            self.zoom_control.valueChanged.connect\(self.zoom\)) s
+5 208 M
+(            self.layout.addWidget\(self.zoom_control,1,4,4,1\)) s
+5 186 M
+(            self.rootwindow=QX11Info.appRootWindow\(\)) s
+5 175 M
+(        ) s
+5 164 M
+(        #Show the widget) s
+5 153 M
+(            self.w.show\(\)) s
+5 131 M
+(            self.window=self.app.allWindows\(\)) s
+5 120 M
+(            self.w.setParent\(self\)) s
+5 109 M
+(        ) s
+5 98 M
+(        #Function for starting the app) s
+5 87 M
+(        def start\(self\):) s
+5 76 M
+(            self.app.exec_\(\)) s
+5 65 M
+(        ) s
+5 54 M
+(        #Function for quiting the application \(used for the button\)) s
+5 43 M
+(        def quit_cb\(self\):) s
+5 32 M
+(            quit\(\)) s
+5 21 M
+(        ) s
+5 10 M
+(        #Function for the save button, saves to the directory as a PNG) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 3 def
+/fname (HW11) def
+/fdir (.) def
+/ftail (HW11) def
+% User defined strings:
+/fmodstr (Mon May 01 21:34:35 2023) def
+/pagenumstr (3) def
+/user_header_p true def
+/user_header_left_str (HW11 23/05/01 21:34:44) def
+/user_header_center_str (3) def
+/user_header_right_str (Isaac Violette) def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 692 M
+(        def save_image_cb\(self\):) s
+5 681 M
+(            self.qimage.save\("/home/iviolette/Pictures/Screen_Grab.png","png"\)) s
+5 659 M
+(        #Function for replace button, cursor is used as a box) s
+5 648 M
+(        #Grabs the location of the image at the mouse location) s
+5 637 M
+(        def replace_cb\(self\):) s
+5 626 M
+(            # Allow mouse to move around to grab a spot) s
+5 615 M
+(            pm=QPixmap\('cursor.png'\)) s
+5 604 M
+(            cursor=QCursor\(pm,hotX=0,hotY=0\)) s
+5 593 M
+(            self.w.grabMouse\(cursor\)) s
+5 582 M
+(            self.w.update\(True\)) s
+5 571 M
+(        ) s
+5 560 M
+(        #This function actually grabs the image from the cursor location) s
+5 549 M
+(        #and wraps it up into a scaled image for the widget.) s
+5 538 M
+(        def update\(self,pos\):) s
+5 527 M
+(            r=QRect\(pos,QSize\(50,50\)\)                                               ) s
+5 516 M
+(            ri=self.screen.geometry\(\).intersected\(r\)                                ) s
+5 505 M
+(            x=ri.x\(\)                                                                ) s
+5 494 M
+(            y=ri.y\(\)                                                                ) s
+5 483 M
+(            w=ri.width\(\)                                                            ) s
+5 472 M
+(            h=ri.height\(\)                                                           ) s
+5 461 M
+(            self.pixmap=self.screen.grabWindow\(self.rootwindow,x,y,w,h\)) s
+5 450 M
+(            self.size=QSize\(200,200\)) s
+5 439 M
+(            self.pixmap_scaled=self.pixmap.scaled\(self.size\)) s
+5 428 M
+(            self.qimage=self.pixmap_scaled.toImage\(\)) s
+5 417 M
+(            self.label.setPixmap\(self.pixmap_scaled\)) s
+5 406 M
+(            self.label.setqimage\(self.qimage\)) s
+5 395 M
+(        ) s
+5 384 M
+(        #Function for zoom, takes the image and scales it, returns it as a label) s
+5 373 M
+(        def zoom\(self, level\):) s
+5 362 M
+(            zoom_quantity = level / 100) s
+5 351 M
+(            self.label.setScaledContents\(True\)) s
+5 340 M
+(            self.label.setFixedSize\(self.label.pixmap\(\).size\(\) * zoom_quantity\)) s
+5 318 M
+(    #Start the application) s
+5 307 M
+(    if __name__=='__main__':) s
+5 296 M
+(        app=pyqtmag\(\)) s
+5 285 M
+(        app.start\(\)) s
+5 263 M
+(2.) s
+5 252 M
+(    enscript -b '$n %E %C|$%|Isaac Violette' -T 4 -M Letter -p HW11.ps HW11 ) s
+_R
+S
+%%Trailer
+%%Pages: 3
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF
