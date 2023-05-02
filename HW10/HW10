@@ -1,0 +1,30 @@
+1.
+	vim was used to write this homework
+
+2.
+
+	#!/usr/bin/perl
+
+	open(IN,"/usr/share/dict/words") or die "Cannot open words\n";
+
+	my %inc;
+	while (<IN>) {
+		chomp;
+		# Exclude non lower case words (1 line)
+		next if /[^a-z]/;
+
+		# Explode each word into individual characters (1 line)
+		my @characters = split //;
+
+		# For each character, increment a count for that letter (3 lines)
+		foreach my $character (@characters) {
+			$inc{$character}++;
+		}
+	}
+	# print the histogram (sort by letter) (3 lines)
+	foreach my $letter (sort keys %inc) {
+		printf("%s: %s\n", $letter, $inc{$letter});
+	}
+
+3.
+	enscript -b '$n %E %C|$%|Isaac Violette' -M Letter -T 4 -p HW10.ps HW10

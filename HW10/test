@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+open(IN, "/usr/share/dict/words") or die "Cannot open words\n";
+
+my %counts;
+while (<IN>) {
+  chomp;
+  # Exclude non-lowercase words
+  next if /[^a-z]/;
+
+  # Explode each word into individual characters
+  my @chars = split //;
+
+  # For each character, increment a count for that letter
+  foreach my $char (@chars) {
+    $counts{$char}++;
+  }
+}
+
+# Print the histogram (sort by letter)
+foreach my $letter (sort keys %counts) {
+  printf("%s: %s\n", $letter, $counts{$letter});
+}
